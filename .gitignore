@@ -1,0 +1,10 @@
+terraform.tfvars
+*.tfvars
+!*.tfvars.example
+sa-key.json
+authorized_key.json
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+

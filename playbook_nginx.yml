@@ -1,0 +1,41 @@
+---
+- name: Install and start nginx
+  gather_facts: false
+  hosts: webservers
+  vars:
+    ansible_ssh_user: ubuntu
+  become: yes
+
+  pre_tasks:
+    - name: Waiting for SSH to be available
+      wait_for:
+        host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
+        port: 22
+        delay: 5
+        timeout: 300
+        state: started
+        search_regex: OpenSSH
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start and enable nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Check nginx is running
+      command: systemctl status nginx
+      register: nginx_status
+
+    - name: Show nginx status
+      debug:
+        msg: "{{ nginx_status.stdout_lines }}"
