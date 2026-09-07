@@ -1,13 +1,15 @@
 variable "cloud_id" {
   description = "ID облака"
   type        = string
-  default     = "b1gdtifcc9vjrqnd253l"
+  # значение по умолчанию не задано намеренно — передавайте своё через
+  # terraform.tfvars или -var при запуске
 }
 
 variable "folder_id" {
   description = "ID каталога"
   type        = string
-  default     = "b1gaot008hoifqv3mgjr"
+  # значение по умолчанию не задано намеренно — передавайте своё через
+  # terraform.tfvars или -var при запуске
 }
 
 # Ubuntu 22.04 LTS image id (ru-central1)
@@ -52,7 +54,7 @@ variable "ssh_public_key_path" {
 }
 
 variable "admin_ip" {
-  description = "Внешний IP рабочей станции администратора"
+  description = "Внешний IP рабочей станции администратора (узнать: curl ifconfig.me)"
   type        = string
-  default     = "77.238.232.173"
+  # значение по умолчанию не задано намеренно — подставьте свой IP
 }

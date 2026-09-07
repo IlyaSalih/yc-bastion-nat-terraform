@@ -1,8 +1,6 @@
-# Задание 1
+# Yandex Cloud Infrastructure with Terraform + Ansible
 
-## Yandex Cloud Infrastructure with Terraform + Ansible
-
-Поднятие облачной инфраструктуры в Yandex Cloud:
+Облачная инфраструктура в Yandex Cloud, полностью описанная кодом:
 - Bastion-хост с внешним IP (jump host)
 - web-1 (zone A) и web-2 (zone B) без внешних IP
 - NAT Gateway для исходящего интернета
@@ -85,12 +83,17 @@ touch variables.tf network.tf compute.tf outputs.tf security_groups.tf
 
 Заполнить файлы (см. исходники в репозитории).
 
-В `variables.tf` вписать свои значения `cloud_id` и `folder_id`.
-
-Узнать свой внешний IP для `admin_ip`:
+`cloud_id`, `folder_id` и `admin_ip` в `variables.tf` намеренно без значений
+по умолчанию — передайте свои через `terraform.tfvars` или `-var` при запуске:
 
 ```bash
+# узнать свой внешний IP для admin_ip
 curl ifconfig.me
+
+terraform apply \
+  -var="cloud_id=<ваш cloud_id>" \
+  -var="folder_id=<ваш folder_id>" \
+  -var="admin_ip=<ваш IP>/32"
 ```
 
 ### 6. Запуск Terraform
@@ -172,7 +175,9 @@ ANSIBLE_HOST_KEY_CHECKING=False SSH_ARGS="-o StrictHostKeyChecking=no" \
 terraform destroy
 ```
 
-# Задание 2 — Установка nginx через Ansible
+---
+
+## Установка nginx через Ansible
 
 Playbook `nginx.yml` устанавливает и запускает nginx на web-1 и web-2.
 
@@ -183,3 +188,7 @@ ANSIBLE_HOST_KEY_CHECKING=False SSH_ARGS="-o StrictHostKeyChecking=no" \
 ```
 
 ![Welcome to nginx](screenshots/welcome_to_nginx.png)
+
+## Технологии
+
+Terraform · Ansible · Yandex Cloud · Nginx
